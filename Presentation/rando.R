@@ -46,18 +46,17 @@ one <- ggplot(two.hundred, aes(x = Date, y = as.numeric(elapsed)/3600), label = 
   geom_hline(aes(yintercept = 13.5, colour = "red"), size = 1) +
   geom_line() +
   geom_point() +
-  geom_text_repel(aes(label = Route), size = 3) +
+  geom_text_repel(aes(label = Route), size = 4) +
   scale_x_date(date_breaks = "3 months",
                date_labels = "%b %Y") +
   scale_y_continuous(breaks = seq(8, 14, 0.5)) +
   coord_cartesian(ylim = c(8, 14)) +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 16)) +
   labs(y = "Finishing Time (Hours)",
        x = "Ride Date") +
   guides(color = "none") +
   geom_hline(yintercept = mean(as.numeric(two.hundred$elapsed)/3600), linetype = 3) +
-
   geom_hline(yintercept = x.lcl, linetype = 5) +
   geom_hline(yintercept = x.ucl, linetype = 5) +
   annotate(geom="text", x = as.Date("2014-06-05"),
@@ -77,18 +76,17 @@ two <- ggplot(two.hundred, aes(x = Date, y = as.numeric(elapsed)/3600), label = 
   geom_hline(aes(yintercept = 13.5, colour = "red"), size = 1) +
   geom_line() +
   geom_point() +
-  geom_text_repel(aes(label = Route), size = 3) +
+  geom_text_repel(aes(label = Route), size = 4) +
   scale_x_date(date_breaks = "3 months",
                date_labels = "%b %Y") +
   scale_y_continuous(breaks = seq(8, 14, 0.5)) +
   coord_cartesian(ylim = c(8, 14)) +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 16)) +
   labs(y = "Finishing Time (Hours)",
        x = "Ride Date") +
   guides(color = "none") +
   geom_hline(yintercept = mean(as.numeric(two.hundred$elapsed)/3600), linetype = 3) +
-
   geom_hline(yintercept = x.lci, linetype = 5) +
   geom_hline(yintercept = x.uci, linetype = 5) +
   annotate(geom="text", x = as.Date("2014-06-05"),
@@ -112,7 +110,7 @@ three <- ggplot(two.hundred, aes(x = Date, y = moving.range), label = Date) +
   scale_x_date(date_breaks = "3 months",
                date_labels = "%b %Y") +
   theme_classic() +
-  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 16)) +
   labs(y = "Moving Range (Hours)",
        x = "Ride Date") +
   guides(size = "none") +
@@ -125,23 +123,24 @@ three <- ggplot(two.hundred, aes(x = Date, y = moving.range), label = Date) +
            y=1.3 ,label=paste0("Mean: ", round(mr.mean, 1), "hrs")) +
   ggtitle("MR-Chart")
 
+
+# Save Plots
+myplotpath <- file.path(paste0(getwd(), "/XMR.limits.pdf"))
+pdf(file = myplotpath, useDingbats=FALSE, width = 11, height = 8)
 grid.arrange(one, three, heights = 3:2)
+dev.off()
+
+myplotpath <- file.path(paste0(getwd(), "/XMR.limits.png"))
+png(filename = myplotpath, width = 1100, height = 800)
+grid.arrange(one, three, heights = 3:2)
+dev.off()
+
+myplotpath <- file.path(paste0(getwd(), "/XMR.intervals.pdf"))
+pdf(file = myplotpath, useDingbats=FALSE, width = 11, height = 8)
 grid.arrange(two, three, heights = 3:2)
+dev.off()
 
-# need a ggsave call
-
-# make a slideshow about process variation
-# limitation: not evenly spaced sampling
-## also, autocorrelations between observations (using CI might be better)
-## common cause/chance variation: inherent random variability (my stable performance)
-## special cause: non-random (weather, climbing)
-# how to calculate intervals? by using the mean times for 6 month chunks?
-
-## make a fishbone chart
-# rider fitness
-# equipment
-# weather
-# terrain
-# other riders, social aspect (stay with chatty people even if slow, push to ride with faster people)
-
-## post code to github
+myplotpath <- file.path(paste0(getwd(), "/XMR.intervals.png"))
+png(filename = myplotpath, width = 1100, height = 800)
+grid.arrange(two, three, heights = 3:2)
+dev.off()
