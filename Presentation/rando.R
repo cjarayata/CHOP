@@ -155,7 +155,10 @@ grid.arrange(two, three, heights = 3:2)
 dev.off()
 
 
-
+myplotpath <- file.path(paste0(getwd(), "/Xbar.elapsed.png"))
+png(filename = myplotpath, width = 1100, height = 400)
+print(two)
+dev.off()
 
 # Retrace, but this time using Moving Time ####
 
@@ -300,4 +303,10 @@ dev.off()
 myplotpath <- file.path(paste0(getwd(), "/XMR.intervals.moving.png"))
 png(filename = myplotpath, width = 1100, height = 800)
 grid.arrange(two, three, heights = 3:2)
+dev.off()
+
+# Generate plot to compare Elapsed Time vs. Moving Time
+myplotpath <- file.path(paste0(getwd(), "/Xbar.moving.png"))
+png(filename = myplotpath, width = 1100, height = 400)
+print(two)
 dev.off()
